@@ -1,0 +1,24 @@
+[project]
+name = "machine-unlearning"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "ycalk (Лосев Алексей)",email = "alosev752@gmail.com"}
+]
+requires-python = ">=3.12"
+dependencies = [
+    "torch (>=2.14.0,<3.0.0)",
+    "kagglehub (>=1.0.2,<2.0.0)"
+]
+
+[tool.poetry]
+package-mode = false
+
+[[tool.poetry.source]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "explicit"
+
+
+[tool.poetry.dependencies]
+torch = {source = "pytorch-cpu"}
