@@ -3,7 +3,8 @@ name = "machine-unlearning"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "ycalk (Лосев Алексей)",email = "alosev752@gmail.com"}
+    {name = "yychernyshov (Чернышов Юрий Юрьевич)",email = "iu.iu.chernyshov@urfu.ru"},
+    {name = "ycalk (Лосев Алексей Ярославович)",email = "alosev752@gmail.com"}
 ]
 requires-python = ">=3.12,<3.14.1"
 dependencies = [
