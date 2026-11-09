@@ -70,11 +70,10 @@ def nc_stats(z: np.ndarray, y: np.ndarray, C: int) -> dict:
     off = (n @ n.T)[~np.eye(C, dtype=bool)]
     within = sum(np.sum((z[y == c] - mus[c]) ** 2) for c in range(C))
     tot = np.sum((z - z.mean(0)) ** 2)
-    gram = np.linalg.eigvalsh(n @ n.T)[::-1]
     return {"cos": float(off.mean()), "std": float(off.std()),
             "cv": float(np.linalg.norm(mc, axis=1).std() / np.linalg.norm(mc, axis=1).mean()),
             "nc1": float(within / (tot - within)),
-            "gram": np.round(gram, 2).tolist(), "mus": mus}
+            "mus": mus}
 
 
 def place(z: np.ndarray, mus: np.ndarray):
@@ -124,8 +123,8 @@ def build(hidden: int, C: int) -> None:
         logits = model(x).numpy().astype(float)
     spaces = [
         ("вход (2D)", x.numpy().astype(float), ""),
-        (f"признаки ({hidden}D, выход первого слоя)", feats, ""),
-        (f"логиты ({C}D, выход второго слоя)", logits, " · центрировано"),
+        (f"признаки ({hidden}D, выход второго слоя)", feats, ""),
+        (f"логиты ({C}D, выход третьего слоя)", logits, " · центрировано"),
         (f"softmax ({C}D, на логитах)", torch.softmax(torch.tensor(logits), 1).numpy(),
          " · центрировано"),
     ]
@@ -138,9 +137,9 @@ def build(hidden: int, C: int) -> None:
         draw(ax, coords, m3, y, C, kind)
         extra = "" if frac == 1.0 else f"\n3 оси: {frac * 100:.0f}% дисперсии"
         ax.set_title(f"{name}{note}\ncos = {st['cos']:+.3f} ± {st['std']:.3f}   CV = {st['cv']:.2f}"
-                     f"\nвнутри/между = {st['nc1']:.2f}   Грам = {st['gram']}{extra}", fontsize=9)
+                     f"\nвнутри/между = {st['nc1']:.2f}", fontsize=9)
         print(f"{hidden}->{C} {name:44s} [{kind}] cos={st['cos']:+.3f}±{st['std']:.3f} "
-              f"CV={st['cv']:.3f} NC1={st['nc1']:.3f} gram={st['gram']}")
+              f"CV={st['cv']:.3f} NC1={st['nc1']:.3f}")
 
     handles = [plt.Line2D([], [], marker="o", ls="", color=COLORS[c], label=f"класс {c + 1}")
                for c in range(C)]
