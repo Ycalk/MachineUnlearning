@@ -144,7 +144,7 @@ def build(hidden: int, C: int) -> None:
     handles = [plt.Line2D([], [], marker="o", ls="", color=COLORS[c], label=f"класс {c + 1}")
                for c in range(C)]
     fig.legend(handles=handles, loc="lower center", ncol=C, fontsize=11, frameon=False)
-    fig.suptitle(f"Модель 2 → {hidden} → {C}: симплекс с {C} вершинами "
+    fig.suptitle(f"Модель {hidden} → {C}: симплекс с {C} вершинами "
                  f"в четырёх системах координат", fontsize=13)
     fig.tight_layout(rect=(0, 0.04, 1, 0.95))
     out = OUT / f"toy_{hidden}to{C}.png"
